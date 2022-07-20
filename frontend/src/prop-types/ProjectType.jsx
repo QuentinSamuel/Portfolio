@@ -1,7 +1,7 @@
 import propTypes from "prop-types";
 
-export const ProjetType = propTypes.shape({
-  projet: propTypes.shape({
+export const ProjectType = propTypes.shape({
+  project: propTypes.shape({
     id: propTypes.number.isRequired,
     name: propTypes.string.isRequired,
     github: propTypes.string.isRequired,
@@ -12,8 +12,8 @@ export const ProjetType = propTypes.shape({
   }).isRequired,
 }).isRequired;
 
-export const defaultProjetType = {
-  projet: {
+export const defaultProjectType = {
+  project: {
     id: 0,
     name: "",
     github: "",

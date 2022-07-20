@@ -1,32 +1,32 @@
-import Projet from "./Projet";
+import Project from "./Project";
 
-const projets = [
+const projects = [
   {
     id: 1,
-    name: "Projet 1",
+    name: "Project 1",
     github: "https://github.com/QuentinSamuel/Portfolio",
     demo: "https://quentinsamuel.github.io/Portfolio/",
-    description: "Projet 1",
+    description: "Project 1",
     date_start: "2020-01-01",
     date_end: "2020-03-01",
   },
   {
     id: 2,
-    name: "Projet 2",
+    name: "Project 2",
     github: "https://github.com/QuentinSamuel/Wild-Post",
     demo: "https://quentinsamuel.github.io/Wild-Post/",
-    description: "Projet 2",
+    description: "Project 2",
     date_start: "2020-01-01",
     date_end: "2020-03-01",
   },
 ];
 
-export default function ProjetList() {
+export default function ProjectList() {
   return (
     <ul className="flex flex-col items-center">
-      {projets.map((projet) => (
+      {projects.map((project) => (
         <li>
-          <Projet key={projet.id} projet={projet} />
+          <Project key={project.id} project={project} />
         </li>
       ))}
     </ul>

@@ -1,4 +1,4 @@
-import ProjetList from "./components/Project/ProjetList";
+import ProjetList from "./components/Project/ProjectList";
 import "./App.css";
 
 function App() {
