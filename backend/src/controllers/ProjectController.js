@@ -59,6 +59,7 @@ class ProjectController {
     models.project
       .insert(project)
       .then(([result]) => {
+        project.id = result.insertId;
         res.status(201).send({ ...project, id: result.insertId });
       })
       .catch((err) => {

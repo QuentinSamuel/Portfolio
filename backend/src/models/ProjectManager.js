@@ -5,15 +5,30 @@ class ProjectManager extends AbstractManager {
 
   insert(project) {
     return this.connection.query(
-      `insert into ${ProjectManager.table} (name) values (?)`,
-      [project.name]
+      `insert into ${ProjectManager.table} (name , description , github , demo , date_start , date_end) values (?, ?, ?, ?, ?, ?)`,
+      [
+        project.name,
+        project.description,
+        project.github,
+        project.demo,
+        project.date_start,
+        project.date_end,
+      ]
     );
   }
 
   update(project) {
     return this.connection.query(
-      `update ${ProjectManager.table} set name = ? where id = ?`,
-      [project.name, project.id]
+      `update ${ProjectManager.table} set name = ?, description = ?, github = ?, demo = ?, date_start = ?, date_end = ? where id = ?`,
+      [
+        project.name,
+        project.description,
+        project.github,
+        project.demo,
+        project.date_start,
+        project.date_end,
+        project.id,
+      ]
     );
   }
 }
