@@ -23,10 +23,12 @@ const projets = [
 
 export default function ProjetList() {
   return (
-    <div className="projet-list">
+    <ul className="flex flex-col items-center">
       {projets.map((projet) => (
-        <Projet key={projet.id} projet={projet} />
+        <li>
+          <Projet key={projet.id} projet={projet} />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

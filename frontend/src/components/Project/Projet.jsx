@@ -2,8 +2,11 @@ import { ProjetType, defaultProjetType } from "@prop-types/ProjetType";
 
 export default function Projet({ projet }) {
   return (
-    <div className="projet">
-      <div className="projet-name">{projet.name}</div>
+    <>
+      <figure className="border">
+        <img src="https://picsum.photos/250/250" alt="projet" />
+        <figcaption className="text-center">{projet.name}</figcaption>
+      </figure>
       <div className="projet-description">{projet.description}</div>
       <div className="projet-date">
         {projet.date_start} - {projet.date_end}
@@ -12,7 +15,7 @@ export default function Projet({ projet }) {
         <a href={projet.github}>Github</a>
         <a href={projet.demo}>Demo</a>
       </div>
-    </div>
+    </>
   );
 }
 
