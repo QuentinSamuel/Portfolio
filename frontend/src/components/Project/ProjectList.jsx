@@ -1,27 +1,21 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Project from "./Project";
 
-const projects = [
-  {
-    id: 1,
-    name: "Project 1",
-    github: "https://github.com/QuentinSamuel/Portfolio",
-    demo: "https://quentinsamuel.github.io/Portfolio/",
-    description: "Project 1",
-    date_start: "2020-01-01",
-    date_end: "2020-03-01",
-  },
-  {
-    id: 2,
-    name: "Project 2",
-    github: "https://github.com/QuentinSamuel/Wild-Post",
-    demo: "https://quentinsamuel.github.io/Wild-Post/",
-    description: "Project 2",
-    date_start: "2020-01-01",
-    date_end: "2020-03-01",
-  },
-];
-
 export default function ProjectList() {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        `${
+          import.meta.env.VITE_BACKEND_URL ?? "http://localhost:5000"
+        }/projects`
+      )
+      .then((res) => res.data)
+      .then((data) => setProjects(data));
+  }, []);
+
   return (
     <ul className="flex flex-col items-center">
       {projects.map((project) => (
