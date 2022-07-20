@@ -1,7 +1,7 @@
 import { ProjectType, defaultProjectType } from "@prop-types/ProjectType";
 import Modal from "@components/Modal/Modal";
 
-export default function Project({ project }) {
+export default function ProjectMobile({ project }) {
   return (
     <Modal>
       <Modal.Trigger>
@@ -22,6 +22,6 @@ export default function Project({ project }) {
   );
 }
 
-Project.propTypes = ProjectType;
+ProjectMobile.propTypes = ProjectType;
 
-Project.defaultProps = defaultProjectType;
+ProjectMobile.defaultProps = defaultProjectType;
