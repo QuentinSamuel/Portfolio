@@ -12,7 +12,6 @@ export default function ProjectModal() {
     <form
       onSubmit={(event) => {
         event.preventDefault();
-
         const project = {
           name: nameRef.current.value,
           description: descriptionRef.current.value,
@@ -21,6 +20,7 @@ export default function ProjectModal() {
           date_start: startDateRef.current.value,
           date_end: endDateRef.current.value,
         };
+
         fetch(
           `${
             import.meta.env.VITE_BACKEND_URL ?? "http://localhost:5000"
