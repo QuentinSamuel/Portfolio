@@ -26,18 +26,31 @@ SET time_zone = "+00:00";
 -- Structure de la table `item`
 --
 
-CREATE TABLE `item` (
+CREATE TABLE `project` (
   `id` int(11) UNSIGNED NOT NULL,
-  `title` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `name` varchar(150) NOT NULL,
+  `github` varchar(255),
+  `demo` varchar(255),
+  `description` varchar(255) NOT NULL,
+  `date_start` date NOT NULL,
+  `date_end` date NOT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `item`
 --
 
-INSERT INTO `item` (`id`, `title`) VALUES
-(1, 'Stuff'),
-(2, 'Doodads');
+INSERT INTO `project` (`id`, `name`, `github`, `demo`, `description`, `date_start`, `date_end` ) VALUES
+(1, 'Wild Post', 'https://github.com/QuentinSamuel/Wild-Post','https://simon-duc.github.io/potential-octo-umbrella/','Premier projet collaboratif dans le cadre de la formation Web de la Wild Code School -3eme semaine de formation' , '2022-03-14', '2022-03-25' ),
+
+(2, 'Hero Corporation', 'https://github.com/QuentinSamuel/Hero-Corporation', 'https://theodep.github.io/Hero-Corporation/','Second projet collaboratif dans le cadre de la formation Web de la Wild Code School - 6eme semaine de formation', '2022-04-04', '2022-05-11'),
+
+(3, 'Hackathon Champ Post', 'https://github.com/QuentinSamuel/hackathon-1-Champ-Post', NULL, 'Premier hackathon collaboratif dans le cadre de la formation Web de la Wild Code School - 11eme semaine de formation', '2022-05-12', '2022-05-13'),
+
+(4, 'Postverta', 'https://github.com/QuentinSamuel/Postverta', NULL, 'Troisième projet collaboratif dans le cadre de la formation Web de la Wild Code School - 13eme semaine de formation', '2022-05-23', '2022-07-15'),
+
+(5, 'Hackathon Apside', 'https://github.com/QuentinSamuel/hackathon-2-Apisde' , NULL, 'Deuxième hackathon collaboratif dans le cadre de la formation Web de la Wild Code School - 18eme semaine de formation', '2022-06-29', '2022-07-01');
+
 
 --
 -- Index pour les tables exportées
@@ -46,7 +59,7 @@ INSERT INTO `item` (`id`, `title`) VALUES
 --
 -- Index pour la table `item`
 --
-ALTER TABLE `item`
+ALTER TABLE `project`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -56,8 +69,8 @@ ALTER TABLE `item`
 --
 -- AUTO_INCREMENT pour la table `item`
 --
-ALTER TABLE `item`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `project`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
