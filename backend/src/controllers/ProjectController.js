@@ -29,6 +29,22 @@ class ProjectController {
       });
   };
 
+  static readTechnos = (req, res) => {
+    models.techno
+      .findTechnosByProjectId(req.params.projectId)
+      .then(([rows]) => {
+        if (rows[0] == null) {
+          res.sendStatus(404);
+        } else {
+          res.send(rows);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        res.sendStatus(500);
+      });
+  };
+
   static edit = (req, res) => {
     const project = req.body;
 
@@ -68,9 +84,36 @@ class ProjectController {
       });
   };
 
+  static addTechno = (req, res) => {
+    const projectId = parseInt(req.params.projectId, 10);
+    const technoId = parseInt(req.params.technoId, 10);
+
+    models.project_techno
+      .insertTechno(projectId, technoId)
+      .then(() => {
+        res.sendStatus(204);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.sendStatus(500);
+      });
+  };
+
   static delete = (req, res) => {
     models.project
       .delete(req.params.id)
+      .then(() => {
+        res.sendStatus(204);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.sendStatus(500);
+      });
+  };
+
+  static deleteTechno = (req, res) => {
+    models.project_techno
+      .deleteTechno(req.params.projectId, req.params.technoId)
       .then(() => {
         res.sendStatus(204);
       })
