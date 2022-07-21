@@ -49,7 +49,7 @@ export default function UpdateModal({ project }) {
           id="name"
           placeholder={project.name}
           name="name"
-          defaultValue={project.name}
+          value={project.name}
         />
       </label>
       <label htmlFor="description">
@@ -60,7 +60,7 @@ export default function UpdateModal({ project }) {
           id="description"
           ref={descriptionRef}
           placeholder={project.description}
-          defaultValue={project.description}
+          value={project.description}
         />
       </label>
       <label htmlFor="github">
@@ -71,7 +71,7 @@ export default function UpdateModal({ project }) {
           id="github"
           ref={githubRef}
           placeholder={project.github}
-          defaultValue={project.github}
+          value={project.github}
         />
       </label>
       <label htmlFor="demo">
@@ -82,7 +82,7 @@ export default function UpdateModal({ project }) {
           id="demo"
           ref={demoRef}
           placeholder={project.demo}
-          defaultValue={project.demo}
+          value={project.demo}
         />
       </label>
       <label htmlFor="startDate">
