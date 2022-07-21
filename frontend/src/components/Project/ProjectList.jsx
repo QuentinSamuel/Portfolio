@@ -38,9 +38,28 @@ export default function ProjectList({ admin }) {
       window.removeEventListener("resize", resize, false);
     };
   }, []);
-
   const ProjectComponent = allData ? ProjectDesktop : ProjectMobile;
 
+  const deleteProject = (id) => {
+    fetch(
+      `${
+        import.meta.env.VITE_BACKEND_URL ?? "http://localhost:5000"
+      }/projects/${id}`,
+      {
+        method: "DELETE",
+      }
+    )
+      .then((response) => {
+        if (response.status === 204) {
+          console.warn("Project deleted successfully");
+        } else {
+          console.warn("Error deleting project");
+        }
+      })
+      .then(() => {
+        setProjects(projects.filter((project) => project.id !== id));
+      });
+  };
   return (
     <div>
       {admin ? (
@@ -57,6 +76,9 @@ export default function ProjectList({ admin }) {
             {projects.map((project) => (
               <li className="m-2" key={project.id}>
                 <ProjectComponent project={project} admin />
+                <button type="button" onClick={() => deleteProject(project.id)}>
+                  Supprimer
+                </button>
               </li>
             ))}
           </ul>
