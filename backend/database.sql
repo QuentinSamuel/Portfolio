@@ -74,3 +74,65 @@ ALTER TABLE `project`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+CREATE TABLE `techno`(
+  `id` int(11) UNSIGNED NOT NULL,
+  `name` varchar(150) NOT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `techno`(`id`, `name`) VALUES
+(1, 'HTML'),
+(2, 'CSS'),
+(3, 'Javascript'),
+(4, 'React'),
+(5, 'NodeJS'),
+(6, 'Express'),
+(7, 'Git'),
+(8, 'MySQL');
+
+
+ALTER TABLE `techno`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `techno`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  
+CREATE TABLE `project_techno`(
+  `project_id` int(11) UNSIGNED NOT NULL,
+  `techno_id` int(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (project_id , techno_id),
+  CONSTRAINT FK_Project_Techno_Project FOREIGN KEY (project_id) REFERENCES project(id),
+  CONSTRAINT FK_Project_Techno_Techno FOREIGN KEY (techno_id) REFERENCES techno(id)
+)ENGINE=InnoDB DEFAULT CHARSET=latin1; 
+
+INSERT INTO `project_techno` (`project_id`, `techno_id`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 7),
+(2, 1),
+(2, 2),
+(2, 3),
+(2, 4),
+(2, 7),
+(3, 1),
+(3, 2),
+(3, 3),
+(3, 4),
+(3, 7),
+(4, 1),
+(4, 2),
+(4, 3),
+(4, 4),
+(4, 5),
+(4, 6),
+(4, 7),
+(4, 8),
+(5, 1),
+(5, 2),
+(5, 3),
+(5, 4),
+(5, 7);
+
+
+
