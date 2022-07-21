@@ -112,8 +112,11 @@ class ProjectController {
   };
 
   static deleteTechno = (req, res) => {
+    const projectId = parseInt(req.params.projectId, 10);
+    const technoId = parseInt(req.params.technoId, 10);
+
     models.project_techno
-      .deleteTechno(req.params.projectId, req.params.technoId)
+      .deleteTechno(projectId, technoId)
       .then(() => {
         res.sendStatus(204);
       })

@@ -10,10 +10,10 @@ class ProjectTechnoManager extends AbstractManager {
     );
   }
 
-  deleteTechno(projectTechno) {
+  deleteTechno(projectId, technoId) {
     return this.connection.query(
       `delete from ${ProjectTechnoManager.table} where project_id = ? and techno_id = ?`,
-      [projectTechno.project_id, projectTechno.techno_id]
+      [projectId, technoId]
     );
   }
 }

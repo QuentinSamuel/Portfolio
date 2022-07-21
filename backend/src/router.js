@@ -17,7 +17,10 @@ router.post("/technos", TechnoController.add);
 router.delete("/technos/:id", TechnoController.delete);
 
 router.get("/projects/:projectId/technos", ProjectController.readTechnos);
-router.post("/projects/:projectId/technos", ProjectController.addTechno);
+router.post(
+  "/projects/:projectId/technos/:technoId",
+  ProjectController.addTechno
+);
 router.delete(
   "/projects/:projectId/technos/:technoId",
   ProjectController.deleteTechno
