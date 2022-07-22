@@ -9,6 +9,7 @@ import ProjectModal from "./ProjectModal";
 export default function ProjectList({ admin }) {
   const [projects, setProjects] = useState([]);
   const [allData, setAllData] = useState(false);
+  const [allTechnos, setAllTechnos] = useState([]);
 
   useEffect(() => {
     axios
@@ -18,7 +19,20 @@ export default function ProjectList({ admin }) {
         }/projects`
       )
       .then((res) => res.data)
-      .then((data) => setProjects(data));
+      .then((data) => {
+        setProjects(data);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(
+        `${import.meta.env.VITE_BACKEND_URL ?? "http://localhost:5000"}/technos`
+      )
+      .then((res) => res.data)
+      .then((data) => {
+        setAllTechnos(data);
+      });
   }, []);
 
   useEffect(() => {
@@ -38,6 +52,7 @@ export default function ProjectList({ admin }) {
       window.removeEventListener("resize", resize, false);
     };
   }, []);
+
   const ProjectComponent = allData ? ProjectDesktop : ProjectMobile;
 
   const deleteProject = (id) => {
@@ -60,6 +75,7 @@ export default function ProjectList({ admin }) {
         setProjects(projects.filter((project) => project.id !== id));
       });
   };
+
   return (
     <div>
       {admin ? (
@@ -75,7 +91,28 @@ export default function ProjectList({ admin }) {
           <ul className="flex flex-col items-center">
             {projects.map((project) => (
               <li className="m-2" key={project.id}>
-                <ProjectComponent project={project} admin />
+                <ProjectComponent
+                  project={project}
+                  admin
+                  allTechnos={allTechnos}
+                  toggleTechno={(technoName) => {
+                    if (
+                      project.technos.find(
+                        (techno) => techno.name === technoName
+                      ) != null
+                    ) {
+                      // eslint-disable-next-line no-param-reassign
+                      project.technos = project.technos.filter(
+                        (t) => t.name !== technoName
+                      );
+                    } else {
+                      project.technos.push(
+                        allTechnos.find((techno) => techno.name === technoName)
+                      );
+                    }
+                    setProjects([...projects]);
+                  }}
+                />
                 <button type="button" onClick={() => deleteProject(project.id)}>
                   Supprimer
                 </button>
