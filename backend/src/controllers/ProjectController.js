@@ -2,15 +2,23 @@ const models = require("../models");
 
 class ProjectController {
   static browse = (req, res) => {
-    models.project
-      .findAll()
-      .then(([rows]) => {
-        res.send(rows);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.sendStatus(500);
-      });
+    models.project.findAll().then(([rows]) => {
+      Promise.all(
+        rows.map((project) => models.techno.findTechnosByProjectId(project.id))
+      )
+        .then((technos) => {
+          res.json(
+            rows.map((project, index) => ({
+              ...project,
+              technos: technos[index][0],
+            }))
+          );
+        })
+        .catch((err) => {
+          console.error(err);
+          res.sendStatus(500);
+        });
+    });
   };
 
   static read = (req, res) => {
@@ -29,41 +37,31 @@ class ProjectController {
       });
   };
 
-  static readTechnos = (req, res) => {
-    models.techno
-      .findTechnosByProjectId(req.params.projectId)
-      .then(([rows]) => {
-        if (rows[0] == null) {
-          res.sendStatus(404);
-        } else {
-          res.send(rows);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        res.sendStatus(500);
-      });
-  };
-
   static edit = (req, res) => {
-    const project = req.body;
-
-    // TODO validations (length, format...)
-
-    project.id = parseInt(req.params.id, 10);
-
+    const { technos, ...project } = req.body;
     models.project
-      .update(project)
-      .then(([result]) => {
-        if (result.affectedRows === 0) {
-          res.sendStatus(404);
-        } else {
-          res.sendStatus(204);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        res.sendStatus(500);
+      .delete(
+        technos.forEach((techno) => techno.id),
+        project.id
+      )
+      .then(() => {
+        models.project
+          .insert(project)
+          .then(() => {
+            models.project_techno
+              .insertTechno(project.id, technos)
+              .then(() => {
+                res.sendStatus(200);
+              })
+              .catch((err) => {
+                console.error(err);
+                res.sendStatus(500);
+              });
+          })
+          .catch((err) => {
+            console.error(err);
+            res.sendStatus(500);
+          });
       });
   };
 
@@ -88,22 +86,14 @@ class ProjectController {
     const projectId = parseInt(req.params.projectId, 10);
     const technoId = parseInt(req.params.technoId, 10);
 
-    models.project_techno
-      .insertTechno(projectId, technoId)
-      .then(() => {
-        res.sendStatus(204);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.sendStatus(500);
-      });
-  };
-
-  static delete = (req, res) => {
     models.project
-      .delete(req.params.id)
-      .then(() => {
-        res.sendStatus(204);
+      .addTechno(projectId, technoId)
+      .then(([result]) => {
+        if (result.affectedRows === 0) {
+          res.sendStatus(404);
+        } else {
+          res.sendStatus(204);
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -115,10 +105,30 @@ class ProjectController {
     const projectId = parseInt(req.params.projectId, 10);
     const technoId = parseInt(req.params.technoId, 10);
 
-    models.project_techno
+    models.project
       .deleteTechno(projectId, technoId)
-      .then(() => {
-        res.sendStatus(204);
+      .then(([result]) => {
+        if (result.affectedRows === 0) {
+          res.sendStatus(404);
+        } else {
+          res.sendStatus(204);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        res.sendStatus(500);
+      });
+  };
+
+  static delete = (req, res) => {
+    models.project
+      .delete(req.params.id)
+      .then(([result]) => {
+        if (result.affectedRows === 0) {
+          res.sendStatus(404);
+        } else {
+          res.sendStatus(204);
+        }
       })
       .catch((err) => {
         console.error(err);

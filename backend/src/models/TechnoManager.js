@@ -5,7 +5,7 @@ class TechnoManager extends AbstractManager {
 
   findTechnosByProjectId(projectId) {
     return this.connection.query(
-      `select * from ${TechnoManager.table} where id in (select techno_id from project_techno where project_id = ?)`,
+      `select * from ${TechnoManager.table} join project_techno on project_techno.techno_id = techno.id where project_id = ?`,
       [projectId]
     );
   }
